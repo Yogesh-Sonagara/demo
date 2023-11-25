@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,4 +16,15 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
+});
+
+Route::prefix('admin')->group(function () {
+    // admin login route
+    Route::match(['get', 'post'], 'login', [AdminController::class, 'login'])->name('admin.login');
+    Route::group(['middleware' => ['admin']], function () {
+        Route::controller(AdminController::class)->group(function () {
+            // admin dashboard route
+            Route::get('dashboard', 'dashboard')->name('admin.dashboard');
+        });
+    });
 });
