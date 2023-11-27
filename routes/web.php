@@ -25,6 +25,12 @@ Route::prefix('admin')->group(function () {
         Route::controller(AdminController::class)->group(function () {
             // admin dashboard route
             Route::get('dashboard', 'dashboard')->name('admin.dashboard');
+            // update admin password
+            Route::match(['get', 'post'], 'update-admin-password', 'updateAdminPassword')->name('admin.update_password');
+            // check admin password
+            Route::post('check-current-password', 'checkCurrentPassword')->name('admin.check_current_password');
+            // admin logout route
+            Route::get('logout', 'logout')->name('admin.logout');
         });
     });
 });

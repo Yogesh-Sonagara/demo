@@ -6,6 +6,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Skydash Admin</title>
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
     <!-- plugins:css -->
     <link rel="stylesheet" href="{{ asset('admin/vendors/feather/feather.css') }}">
     <link rel="stylesheet" href="{{ asset('admin/vendors/ti-icons/css/themify-icons.css') }}">
@@ -60,6 +61,8 @@
     <script src="{{ asset('admin/js/dashboard.js') }}"></script>
     <script src="{{ asset('admin/js/Chart.roundedBarCharts.js') }}"></script>
     <!-- End custom js for this page-->
+    {{-- custom js --}}
+    <script src="{{ asset('admin/js/custom.js') }}"></script>
 </body>
 
 </html>
