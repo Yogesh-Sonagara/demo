@@ -29,6 +29,8 @@ Route::prefix('admin')->group(function () {
             Route::match(['get', 'post'], 'update-admin-password', 'updateAdminPassword')->name('admin.update_password');
             // check admin password
             Route::post('check-current-password', 'checkCurrentPassword')->name('admin.check_current_password');
+            // update admin details
+            Route::match(['get', 'post'], 'update-admin-details', 'updateAdminDetails')->name('admin.update_details');
             // admin logout route
             Route::get('logout', 'logout')->name('admin.logout');
         });

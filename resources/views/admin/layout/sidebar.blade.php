@@ -17,7 +17,7 @@
                     <li class="nav-item"> <a class="nav-link" href="{{ route('admin.update_password') }}">Update
                             Password</a>
                     </li>
-                    <li class="nav-item"> <a class="nav-link" href="#">Update
+                    <li class="nav-item"> <a class="nav-link" href="{{ route('admin.update_details') }}">Update
                             Details</a>
                     </li>
                     <li class="nav-item"> <a class="nav-link" href="pages/ui-features/typography.html">Typography</a>

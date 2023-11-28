@@ -7,6 +7,7 @@ use App\Models\Admin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Intervention\Image\Facades\Image;
 
 class AdminController extends Controller
 {
@@ -68,6 +69,60 @@ class AdminController extends Controller
         } else {
             return "false";
         }
+    }
+
+    public function updateAdminDetails(Request $request)
+    {
+        if ($request->isMethod('post')) {
+            $data = $request->except('_token');
+            // validation
+            $rules = [
+                'name' => 'required|regex:/^[\pL\s\-]+$/u',
+                'mobile' => 'required|numeric'
+            ];
+            $customMessages = [
+                'name.required' => 'Name is required',
+                'name.regex' => 'Valid name is required',
+                'mobile.required' => 'Mobile number is required',
+                'mobile.numeric' => 'Valid mobile number is required'
+            ];
+            $this->validate($request, $rules, $customMessages);
+
+            // upload admin photo
+            if ($request->hasFile('image')) {
+                $image = Image::make($request->file('image'));
+
+                /**
+                 * Main Image Upload on Folder Code
+                 */
+                $imageName = time() . '' . $request->file('image')->getClientOriginalExtension();
+                $destinationPath = public_path('admin/images/photos/');
+                $image->resize(100, 100);
+                $image->save($destinationPath . $imageName);
+
+                /**
+                 * Generate Thumbnail Image Upload on Folder Code
+                 */
+                // $destinationPathThumbnail = public_path('images/thumbnail/');
+                // $image->resize(100, 100);
+                // $image->save($destinationPathThumbnail . $imageName);
+                // $imageTmp = $request->file('image');
+                // if ($imageTmp->isValid()) {
+                //     // get image extension
+                //     $extension = $imageTmp->getClientOriginalExtension();
+                //     // generate new image name
+                //     $imageName = time() . ' ' . $extension;
+                //     $imagePath = 'admin/images/photos' . $imageName;
+                //     // upload the image
+
+                // }
+            }
+
+            // update admin details
+            Admin::where('id', Auth::guard('admin')->user()->id)->update($data);
+            return redirect()->back()->with('success', 'Admin details updated successfully.');
+        }
+        return view('admin.settings.update_admin_details');
     }
 
     public function logout()
