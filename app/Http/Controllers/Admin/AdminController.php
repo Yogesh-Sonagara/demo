@@ -91,31 +91,11 @@ class AdminController extends Controller
             // upload admin photo
             if ($request->hasFile('image')) {
                 $image = Image::make($request->file('image'));
-
-                /**
-                 * Main Image Upload on Folder Code
-                 */
-                $imageName = time() . '' . $request->file('image')->getClientOriginalExtension();
+                $imageName = time() . '.' . $request->file('image')->getClientOriginalExtension();
                 $destinationPath = public_path('admin/images/photos/');
                 $image->resize(100, 100);
                 $image->save($destinationPath . $imageName);
-
-                /**
-                 * Generate Thumbnail Image Upload on Folder Code
-                 */
-                // $destinationPathThumbnail = public_path('images/thumbnail/');
-                // $image->resize(100, 100);
-                // $image->save($destinationPathThumbnail . $imageName);
-                // $imageTmp = $request->file('image');
-                // if ($imageTmp->isValid()) {
-                //     // get image extension
-                //     $extension = $imageTmp->getClientOriginalExtension();
-                //     // generate new image name
-                //     $imageName = time() . ' ' . $extension;
-                //     $imagePath = 'admin/images/photos' . $imageName;
-                //     // upload the image
-
-                // }
+                $data['image'] = $imageName;
             }
 
             // update admin details

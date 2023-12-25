@@ -83,6 +83,10 @@
                             <div class="form-group">
                                 <label for="image">Admin Photo</label>
                                 <input type="file" name="image" class="form-control" id="image">
+                                @if (!empty(Auth::guard('admin')->user()->image))
+                                    <a href="{{ asset('admin/images/photos/' . Auth::guard('admin')->user()->image) }}"
+                                        target="_blank" rel="noopener noreferrer">View Image</a>
+                                @endif
                             </div>
                             <button type="submit" class="btn btn-primary mr-2">Submit</button>
                             <button class="btn btn-light">Cancel</button>
